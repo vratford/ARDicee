@@ -19,24 +19,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]  // debug option to display feature points
         
         // Set the view's delegate
         sceneView.delegate = self
-        
-//        displayCube()
-        
-//        displayRedCube()
-        
-//        displaySpaceShip()
-        
-//        displayMoon()
-        
-//        displayEarth()
-        
-//        displayDice()
-        
-   
         
 
     }
@@ -68,6 +53,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         }
     
+    // MARK: - Dice rendering methods
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
             let touchLocation = touch.location(in: sceneView)
@@ -75,39 +62,35 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             let results = sceneView.hitTest(touchLocation, types: .existingPlaneUsingExtent)
             
             if let hitResult = results.first {
-              
-                // Create a new scene
-                let diceScene = SCNScene(named: "art.scnassets/diceCollada.scn")!
-                
-                if let diceNode = diceScene.rootNode.childNode(withName: "Dice", recursively: true) {
-                    
-                    diceNode.position = SCNVector3(
-                        x: hitResult.worldTransform.columns.3.x,
-                        y: hitResult.worldTransform.columns.3.y + diceNode.boundingSphere.radius * 3,
-                        z: hitResult.worldTransform.columns.3.z)
-                    
-                    diceArray.append(diceNode)
-                    
-                    sceneView.scene.rootNode.addChildNode(diceNode)
-                    
-                    roll(dice: diceNode)
-                }
-                
+              addDice(atLocation: hitResult)
+               
             }
                 
             }
             
         }
     
-    func rollAll() {
+    func addDice(atLocation location : ARHitTestResult) {  // atLocation is external parameter, location is internal
         
-        if !diceArray.isEmpty {         // !diceArray is not empty
-            for dice in diceArray {
-                roll(dice: dice)
-            }
+        // Create a new scene
+        let diceScene = SCNScene(named: "art.scnassets/diceCollada.scn")!
+        
+        if let diceNode = diceScene.rootNode.childNode(withName: "Dice", recursively: true) {
+            
+            diceNode.position = SCNVector3(
+                x: location.worldTransform.columns.3.x,
+                y: location.worldTransform.columns.3.y + diceNode.boundingSphere.radius * 3,
+                z: location.worldTransform.columns.3.z)
+            
+            diceArray.append(diceNode)
+            
+            sceneView.scene.rootNode.addChildNode(diceNode)
+            
+            roll(dice: diceNode)
         }
+        
     }
-    
+   
     func roll(dice: SCNNode) {
         
         let randomX = Float(arc4random_uniform(4)+1) * (Float.pi/2)
@@ -121,6 +104,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             duration: 0.5))
         
     }
+
+    
+    func rollAll() {
+        
+        if !diceArray.isEmpty {         // !diceArray is not empty
+            for dice in diceArray {
+                roll(dice: dice)
+            }
+        }
+    }
+    
 
     @IBAction func rollAgain(_ sender: UIBarButtonItem) {
         rollAll()
@@ -141,164 +135,44 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
     }
     
+//MARK: - ARScnViewDelegateMethods
+    
     
     func renderer(_ renderer:SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        if anchor is ARPlaneAnchor {
-//            print("Plane detected")  // surface needs to be textured and not shiny
-            
-            let planeAnchor = anchor as! ARPlaneAnchor
-            
-            let plane = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
-            
-            let planeNode = SCNNode()
-            
-            planeNode.position = SCNVector3(x: planeAnchor.center.x, y: 0, z: planeAnchor.center.z)
-            
-            planeNode.transform = SCNMatrix4MakeRotation(-Float.pi/2, 1, 0, 0)
-            
-            let gridMaterial = SCNMaterial()
-            
-            gridMaterial.diffuse.contents = UIImage(named: "art.scnassets/grid.png")
-            
-            plane.materials = [gridMaterial]
-            
-            planeNode.geometry = plane
-            
-            node.addChildNode(planeNode)
-            
-            
-        } else {
-            return
-        }
+        
+        guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
+        
+        let planeNode = createPlane(withPlaneAnchor: planeAnchor)
+        
+        node.addChildNode(planeNode)
+        
+        
 
     }
 
-    func displayCube() {
-  
-        let cube = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.01) // create geometry called cube
-        
-        // Change the color of each side
-        
-        let colors = [UIColor.green, // front
-            UIColor.red, // right
-            UIColor.blue, // back
-            UIColor.yellow, // left
-            UIColor.purple, // top
-            UIColor.gray] // bottom
-        
-        let sideMaterials = colors.map { color -> SCNMaterial in
-            let material = SCNMaterial()
-            material.diffuse.contents = color
-            material.locksAmbientWithDiffuse = true
-            return material
-        }
-        
-        cube.materials = sideMaterials
-        
-        //        let frontMaterial = sideMaterials[0]      // changes the front material to white
-        //        frontMaterial.diffuse.contents = UIColor.white
-        //
-        
-        let node = SCNNode() // point in 3d space
-        
-        node.position = SCNVector3(x: 0, y: 0, z: -0.5) // position of point
-        
-        node.geometry = cube // node has geometry of cube
-        
-        sceneView.scene.rootNode.addChildNode(node)  // place in sceneview
-        
-        sceneView.autoenablesDefaultLighting = true // adds light and shadows to cube
-        
-    }
+    //MARK: - Plane rendering Methods
     
-    func displaySpaceShip() {
-                // Create a new scene
-                let scene = SCNScene(named: "art.scnassets/ship.scn")!
+    func createPlane(withPlaneAnchor planeAnchor: ARPlaneAnchor) -> SCNNode {
+        let plane = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
         
-                // Set the scene to the view
-                sceneView.scene = scene
+        let planeNode = SCNNode()
         
-    }
-    
-    func displayRedCube() {
+        planeNode.position = SCNVector3(x: planeAnchor.center.x, y: 0, z: planeAnchor.center.z)
         
-        let cube = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.01) // create geometry called cube
+        planeNode.transform = SCNMatrix4MakeRotation(-Float.pi/2, 1, 0, 0)
         
-        let material = SCNMaterial() // material is color red
+        let gridMaterial = SCNMaterial()
         
-        material.diffuse.contents = UIColor.red
+        gridMaterial.diffuse.contents = UIImage(named: "art.scnassets/grid.png")
         
-        cube.materials = [material] // passing to array
+        plane.materials = [gridMaterial]
         
-        let node = SCNNode() // point in 3d space
+        planeNode.geometry = plane
         
-        node.position = SCNVector3(x: 0, y: 0, z: -0.5) // position of point
-        
-        node.geometry = cube // node has geometry of cube
-        
-        sceneView.scene.rootNode.addChildNode(node)  // place in sceneview
-        
-        sceneView.autoenablesDefaultLighting = true // adds light and shadows to cube
-        
-    }
-    
-    func displayMoon() {
-            
-            let sphere = SCNSphere(radius: 0.2)
-            
-            let material = SCNMaterial() // material is color red
-            
-            material.diffuse.contents = UIImage(named: "art.scnassets/8k_moon.jpg")
-            
-            sphere.materials = [material] // passing to array
-            
-            let node = SCNNode() // point in 3d space
-            
-            node.position = SCNVector3(x: 0, y: 0, z: -0.5) // position of point
-            
-            node.geometry = sphere // node has geometry of sphere
-            
-            sceneView.scene.rootNode.addChildNode(node)  // place in sceneview
-            
-            sceneView.autoenablesDefaultLighting = true // adds light and shadows to sphere
-            
-        }
-    
-    func displayEarth() {
-        
-        let sphere = SCNSphere(radius: 0.15)
-        
-        let material = SCNMaterial() // material is color red
-        
-        material.diffuse.contents = UIImage(named: "art.scnassets/8k_earth_daymap.jpg")
-        
-        sphere.materials = [material] // passing to array
-        
-        let node = SCNNode() // point in 3d space
-        
-        node.position = SCNVector3(x: 0, y: 0, z: -0.5) // position of point
-        
-        node.geometry = sphere // node has geometry of sphere
-        
-        sceneView.scene.rootNode.addChildNode(node)  // place in sceneview
-        
-        sceneView.autoenablesDefaultLighting = true // adds light and shadows to sphere
-        
-    }
-
-    func displayDice() {
-        
-        // Create a new scene
-        let diceScene = SCNScene(named: "art.scnassets/diceCollada.scn")!
-        
-        if let diceNode = diceScene.rootNode.childNode(withName: "Dice", recursively: true) {
-        
-        diceNode.position = SCNVector3(x: 0, y: 0, z: -0.1)
-        
-        sceneView.scene.rootNode.addChildNode(diceNode)
-         
-        }
+        return planeNode
         
     }
 
 }
+
+
