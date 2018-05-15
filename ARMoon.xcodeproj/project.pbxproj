@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		519316B62093DBF800FD4378 /* ARDicee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARDicee.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		519316B62093DBF800FD4378 /* ARMoon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARMoon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		519316B92093DBF800FD4378 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		519316BB2093DBF800FD4378 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		519316BD2093DBF800FD4378 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -40,7 +40,7 @@
 		519316AD2093DBF800FD4378 = {
 			isa = PBXGroup;
 			children = (
-				519316B82093DBF800FD4378 /* ARDicee */,
+				519316B82093DBF800FD4378 /* ARMoon */,
 				519316B72093DBF800FD4378 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -48,12 +48,12 @@
 		519316B72093DBF800FD4378 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				519316B62093DBF800FD4378 /* ARDicee.app */,
+				519316B62093DBF800FD4378 /* ARMoon.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		519316B82093DBF800FD4378 /* ARDicee */ = {
+		519316B82093DBF800FD4378 /* ARMoon */ = {
 			isa = PBXGroup;
 			children = (
 				519316B92093DBF800FD4378 /* AppDelegate.swift */,
@@ -64,15 +64,15 @@
 				519316C42093DBFB00FD4378 /* LaunchScreen.storyboard */,
 				519316C72093DBFB00FD4378 /* Info.plist */,
 			);
-			path = ARDicee;
+			path = ARMoon;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		519316B52093DBF800FD4378 /* ARDicee */ = {
+		519316B52093DBF800FD4378 /* ARMoon */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 519316CA2093DBFB00FD4378 /* Build configuration list for PBXNativeTarget "ARDicee" */;
+			buildConfigurationList = 519316CA2093DBFB00FD4378 /* Build configuration list for PBXNativeTarget "ARMoon" */;
 			buildPhases = (
 				519316B22093DBF800FD4378 /* Sources */,
 				519316B32093DBF800FD4378 /* Frameworks */,
@@ -82,9 +82,9 @@
 			);
 			dependencies = (
 			);
-			name = ARDicee;
+			name = ARMoon;
 			productName = ARDicee;
-			productReference = 519316B62093DBF800FD4378 /* ARDicee.app */;
+			productReference = 519316B62093DBF800FD4378 /* ARMoon.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -102,7 +102,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 519316B12093DBF800FD4378 /* Build configuration list for PBXProject "ARDicee" */;
+			buildConfigurationList = 519316B12093DBF800FD4378 /* Build configuration list for PBXProject "ARMoon" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -115,7 +115,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				519316B52093DBF800FD4378 /* ARDicee */,
+				519316B52093DBF800FD4378 /* ARMoon */,
 			);
 		};
 /* End PBXProject section */
@@ -286,12 +286,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GNT3ASGKTD;
-				INFOPLIST_FILE = ARDicee/Info.plist;
+				INFOPLIST_FILE = ARMoon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.vinratford.ARDicee;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vinratford.ARMoon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -304,12 +304,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GNT3ASGKTD;
-				INFOPLIST_FILE = ARDicee/Info.plist;
+				INFOPLIST_FILE = ARMoon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.vinratford.ARDicee;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vinratford.ARMoon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -319,7 +319,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		519316B12093DBF800FD4378 /* Build configuration list for PBXProject "ARDicee" */ = {
+		519316B12093DBF800FD4378 /* Build configuration list for PBXProject "ARMoon" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				519316C82093DBFB00FD4378 /* Debug */,
@@ -328,7 +328,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		519316CA2093DBFB00FD4378 /* Build configuration list for PBXNativeTarget "ARDicee" */ = {
+		519316CA2093DBFB00FD4378 /* Build configuration list for PBXNativeTarget "ARMoon" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				519316CB2093DBFB00FD4378 /* Debug */,
